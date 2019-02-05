@@ -51,15 +51,23 @@ public class MaxCharHeap implements MaxCharHeapInterface{
 		int current = 0;
 		int left = getLeftChild(current);
 		int right = getRightChild(current);
-		while (!isLeaf(current) && (heapArray[current] < heapArray[left] || heapArray[current] < heapArray[right])){
-			int next = (heapArray[left] > heapArray[right])?left:right;
-			swap(current, next);
+		while (!isLeaf(current))
+		{
+		    int next;
+		    if (hasRightChild(current)){
+		        next = (heapArray[left]>heapArray[right])?left:right;
+		    }
+		    else next = left;
+		    if (heapArray[next]>heapArray[current]){
+    		    	swap(current, next);
 			current = next;
 			left = getLeftChild(current);
 			right = getRightChild(current);
+		    }
+		    else break;
 		}
 	}
-
+	
 	private void updateFromBottom(){
 		int current = heapLength - 1;
 		int parent = getParent(current);
@@ -73,8 +81,9 @@ public class MaxCharHeap implements MaxCharHeapInterface{
 	private int getLeftChild(int n) {return (n*2 + 1);}
 	private int getRightChild(int n) {return (n*2 + 2);}
 	private int getParent(int n) {return (n-1)/2;}
-	private boolean isLeaf(int n) {return n*2 + 1>= heapLength?true:false;}; // ATTENTION: >= instead of >
+	private boolean isLeaf(int n) {return n*2 + 1>= heapLength?true:false;} // ATTENTION: >= instead of >
 	private boolean isRoot(int n) {return n==0?true:false;}
+	private boolean hasRightChild(int n) {return n*2 + 2>=heapLength?false:true;} // ATTENTION: DON'T forget to check right child
 	private void swap(int a, int b){
 		char temp = heapArray[a];
 		heapArray[a] = heapArray[b];
