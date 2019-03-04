@@ -31,14 +31,14 @@ def compute_max_flow(capacity, s, t):
     C = [[0 for col in range(total+1)] for row in range(total+1)]
     edge = [[] for row in range(total+1)]
     for (u, v) in capacity:
-    '''
-    NOTICE: There might be input which contains both (u,v) and (v, u)
+        '''
+        NOTICE: There might be input which contains both (u,v) and (v, u)
             We should not combine together and set their absolute di-
             fference as the capacity for (u, v) or (v, u) even though
             the result we get for maxflow is correct because it will
             lead to mistake in the minimum cut. 
             (See: flownetwork_03.csv)
-    '''
+        '''
         edge[int(u)].append(int(v))
         edge[int(v)].append(int(u))
         C[int(u)][int(v)] = capacity[(u, v)]
